@@ -35,15 +35,15 @@ export async function getTaData() {
 export async function getPostData(postId) {
   try {
     const result = await executeQuery({
-      query: "SELECT post_id, post_name, post_description, ta_id FROM job_posting.post WHERE post_id = ?",
+      query: "SELECT * FROM job_posting.post WHERE post_id = ?",
       values: [postId],
     });
 
     const newResult = JSON.parse(JSON.stringify(result));
 
-    return newResult;
+    return newResult[0];
   } catch (error) {
-    return [];
+    return {};
   }
 }
 

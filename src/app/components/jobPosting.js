@@ -1,3 +1,5 @@
+"use client";
+
 const JobPostingList = ({ postId, postName, postDescription, taName, deleteJobPosting, updateJobPosting }) => {
   return (
     <>

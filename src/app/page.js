@@ -8,9 +8,11 @@ import FormJobPosting from "./components/formJobPosting";
 export default function Home() {
   const [finalResult, setFinalResult] = useState([]);
 
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState({});
 
   const [flag, setFlag] = useState(0);
+
+  const [formType, setFormType] = useState("Insert");
 
   useEffect(() => {
     getData().then((res) => {
@@ -32,12 +34,18 @@ export default function Home() {
 
   function updateJobPosting(postId) {
     getPostData(postId).then((res) => setPost(res));
+
+    setFormType("Update");
   }
 
   return (
     <div className="w-full h-screen flex">
       <div className="min-h-full p-8 basis-1/2 overflow-hidden">
-        <FormJobPosting insertJobPosting={insertJobPosting} formType={"Insert Post"} />
+        {formType === "Insert" ? (
+          <FormJobPosting insertJobPosting={insertJobPosting} formType={formType} setFormType={setFormType} />
+        ) : (
+          <FormJobPosting postId={post.post_id} postName={post.post_name} postDescription={post.post_description} taId={post.ta_id} formType={formType} setFormType={setFormType} setFlag={setFlag} />
+        )}
       </div>
       <div className="min-h-full p-8 basis-1/2 overflow-scroll">
         <div className="h-full w-full flex flex-col">
