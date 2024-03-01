@@ -43,7 +43,24 @@ export async function getPostData(postId) {
 
     return newResult[0];
   } catch (error) {
-    return {};
+    console.error("Failed to fetch:", error);
+    throw new Error("Failed to fetch.");
+  }
+}
+
+export async function getEmployeeData(employeeEmail) {
+  try {
+    const result = await executeQuery({
+      query: "SELECT * FROM user.employee WHERE employee.email = ? ",
+      values: [employeeEmail],
+    });
+
+    const newResult = JSON.parse(JSON.stringify(result));
+
+    return newResult[0];
+  } catch (error) {
+    console.error("Failed to fetch", error);
+    throw new Error("Failed to fetch.");
   }
 }
 
